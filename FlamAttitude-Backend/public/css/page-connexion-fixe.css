@@ -1,0 +1,84 @@
+/*
+ * Mise en page fixe de la page de connexion : tient exactement dans un écran, sans
+ * défilement, quelle que soit la taille de l'écran (petit téléphone ou grand écran).
+ * Utilise dvh (dynamic viewport height) plutôt que vh : sur mobile, vh ignore la barre
+ * d'adresse qui apparaît/disparaît, ce qui provoquait un contenu plus grand que l'écran
+ * réellement visible. Scopé à body.page-connexion-fixe pour ne pas toucher les autres
+ * pages (inscription, mot de passe oublié) qui partagent le même fichier styleconnexion.css
+ * mais ont plus de champs et ont donc besoin de pouvoir défiler.
+ */
+
+body.page-connexion-fixe {
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/*
+ * Centrage robuste : fixe par rapport à l'écran, indépendant du flux/flexbox de body.
+ * Évite tout décalage lié aux marges négatives utilisées plus bas pour l'espacement interne.
+ */
+#connexion-centre {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 400px;
+    padding: 0 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(4px, 1dvh, 12px);
+}
+
+body.page-connexion-fixe #logoFlamattitude {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+body.page-connexion-fixe #logoFlamattitude img {
+    width: auto;
+    height: clamp(190px, 47dvh, 380px);
+    max-width: 86vw;
+}
+
+body.page-connexion-fixe .portail {
+    width: 100%;
+    max-width: 340px;
+    padding: 0;
+    margin-top: clamp(-68px, -9.5dvh, -34px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 1dvh, 10px);
+    flex-shrink: 0;
+}
+
+body.page-connexion-fixe .portail hr {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+body.page-connexion-fixe .bouton {
+    margin: clamp(16px, 3dvh, 28px) 0 0 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+body.page-connexion-fixe .info {
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+body.page-connexion-fixe .bouton + .info {
+    margin-top: clamp(14px, 2.6dvh, 24px);
+}
+
+body.page-connexion-fixe .info + .info {
+    margin-top: clamp(6px, 1.2dvh, 12px);
+}
+
+/* L'écran d'attente biométrique reste en position:fixed plein écran, indépendant de ce flux. */

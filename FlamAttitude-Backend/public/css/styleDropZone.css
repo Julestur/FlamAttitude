@@ -1,0 +1,241 @@
+/* ---------------------- Importation et création des couleurs et polices de l'ALB ------------------------- */
+
+@import url(https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat);
+
+:root {
+
+  --cobalt: #1E2A3A;
+  --poppy: #D9531E;
+  --grisfr: #A79C8E;
+  --uranian: #F5EFE6;
+  --font-family-titre: "Playfair Display", serif;
+  --font-family-texte: "Montserrat";
+
+}
+
+/* ---------------------- Zone de drag & drop fichier  ------------------------- */
+.zone_DragAndDrop
+{
+    border: 2px dashed #747474;
+    border-radius: 20px;
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: rgb(228, 238, 242);
+
+    cursor: pointer;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.zone_DragAndDrop ion-icon
+{
+    font-size: 30px;
+    margin: 0px auto;
+}
+
+.zone_DragAndDrop.drag-hover {
+  border-color: rgb(255, 0, 0);
+}
+
+pre
+{
+  margin-bottom: 0px;
+}
+
+@keyframes horizontal-shaking {
+  0% { transform: translateX(0) }
+  12.5% { transform: translateX(5px) }
+  25% { transform: translateX(0) }
+  37.5% { transform: translateX(-5px) }
+  50% { transform: translateX(0) }
+  62.5% { transform: translateX(2px) }
+  75% { transform: translateX(0) }
+  87.5% { transform: translateX(-2px) }
+  100% { transform: translateX(0px) }
+}
+
+.error-shake{
+    animation: horizontal-shaking 0.35s infinite;
+    border-color: #fa021b !important;
+  }
+
+
+/* ---------------------- Zone de drag & drop changement de photo ------------------------- */
+.drop-zone-photo
+{
+    border: 2px dashed #747474;
+    border-radius: 20px;
+    display: flex;
+    margin-top: -4%;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: rgb(228, 238, 242);
+
+    cursor: pointer;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   
+}
+
+.drop-zone-photo ion-icon
+{
+    font-size: 30px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    max-width: 50%;
+    max-height: 50%;
+    object-fit: contain;
+}
+
+.drop-zone-photo:hover {
+  border-color: var(--poppy);
+}
+
+.drop-zone-photo input {
+    padding: 50px;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: transparent;
+    text-decoration: none;
+    opacity: 0;
+
+    cursor: pointer;
+    
+}
+
+
+/* Adapatation du CSS pour les smartphones -------------------------------------------------------------------------------- */
+
+@media screen and (max-width: 1280px)
+{
+  .drop-zone-photo
+  {
+      margin: auto;
+      width: 90%;
+  }
+}
+
+
+
+
+
+/* ---------------------- Zone de drag & drop fichier  ------------------------- */
+#zone_DragAndDrop
+{
+    border: 2px dashed #747474;
+    border-radius: 20px;
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: rgb(228, 238, 242);
+
+    cursor: pointer;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#zone_DragAndDrop ion-icon
+{
+    font-size: 30px;
+    margin: 0px auto;
+}
+
+#zone_DragAndDrop.drag-hover {
+  border-color: rgb(255, 0, 0);
+}
+
+
+
+#error-shake{
+    animation: horizontal-shaking 0.35s infinite;
+    border-color: #fa021b !important;
+  }
+
+
+/* ---------------------- Zone de drag & drop changement de photo ------------------------- */
+#drop-zone-photo
+{
+    border: 2px dashed #747474;
+    border-radius: 20px;
+    display: flex;
+    margin-top: -4%;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: rgb(228, 238, 242);
+
+    cursor: pointer;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   
+}
+
+#drop-zone-photo ion-icon
+{
+    font-size: 30px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    max-width: 50%;
+    max-height: 50%;
+    object-fit: contain;
+}
+
+#drop-zone-photo:hover {
+  border-color: var(--poppy);
+}
+
+#drop-zone-photo input {
+    padding: 50px;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: transparent;
+    text-decoration: none;
+    opacity: 0;
+
+    cursor: pointer;
+    
+}
+
+
+/* Adapatation du CSS pour les smartphones -------------------------------------------------------------------------------- */
+
+@media screen and (max-width: 1280px)
+{
+  #drop-zone-photo
+  {
+      margin: auto;
+      width: 90%;
+  }
+}
+
+.spinner-pdp {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(30, 42, 58, 0.2);
+  border-top-color: var(--poppy, #D9531E);
+  animation: tourne-spinner-pdp 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+@keyframes tourne-spinner-pdp {
+  to { transform: rotate(360deg); }
+}

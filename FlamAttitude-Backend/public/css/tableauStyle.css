@@ -1,0 +1,270 @@
+/* ---------------------- Importation et création des couleurs et polices de l'ALB ------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
+:root {
+  --cobalt: #1E2A3A;
+  --poppy: #D9531E;
+  --grisfr: #A79C8E;
+  --uranian: #F5EFE6;
+  --jungleGreen: #419D78;
+  --sunglow: #FFCA5A;
+  --font-family-titre: "Playfair Display", serif;
+  --font-family-texte: "Montserrat";
+
+  --pos-souris-x: 0px;
+  --pos-souris-y: 0px;
+}
+
+
+/* Style de base pour les tableaux */
+table {
+    border-collapse: collapse;
+    /* width: 100%; */
+    margin-bottom: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    color: #333;
+}
+
+/* En-tête du tableau */
+table thead tr {
+    background-color: var(--cobalt);
+    color: white;
+    font-weight: bold;
+}
+
+table thead th {
+    padding: 12px 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+/* Corps du tableau */
+table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+table tbody td {
+    padding: 10px 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.encadrant {
+    background-color: var(--sunglow) !important;
+}
+
+/* Logo */
+.logo {
+    text-align: center;
+}
+
+/* Titre fichier */
+h1 {
+    text-align: center;
+    font-family: var(--font-family-titre);
+    color: black;
+    font-size: 30px;
+    padding: 0% 0% 5% 0%; 
+}
+
+h2 {
+    font-family: var(--font-family-titre);
+    color: black;
+    font-size: 23px;
+}
+
+/* Titre groupe */
+h3 {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    color: #444;
+    padding-bottom: 5px;
+}
+
+/* Contenus autres */
+#avertissement {
+    font-family: Arial, sans-serif;
+    padding: 1% 0%;
+}
+
+a {
+
+  color: var(--uranian);
+
+}
+
+a:link, a:visited, a:hover, a:active { 
+
+  text-decoration: none; 
+
+} 
+
+/* Bouton imprimer */
+.imprimer {
+    background-color: var(--cobalt);
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .5s ease;
+    margin: 20px; 
+    padding: 12px 20px;
+}
+
+.imprimer:hover {
+    background-color: var(--uranian);
+    color: black;
+}
+
+/* Bouton téléchargement */
+
+.telechargement {
+    background-color: var(--jungleGreen);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all .5s ease;
+}
+
+.telechargement:link, .telechargement:visited, .telechargement:hover, .telechargement:active { 
+
+    text-decoration: none; 
+
+} 
+
+.telechargement:hover {
+    background-color: #3db943;
+}
+
+/* Bouton retour vers l'accueil */
+
+.retour {
+
+  text-align: center;
+  padding: 20px 0px;
+  font-size: x-large;
+  font-family: Arial, sans-serif;
+
+}
+
+
+
+
+
+@media print {
+    /* En-tête du tableau */
+    table thead tr {
+        background-color: var(--cobalt) !important;
+        color: white !important;
+    }
+
+    table thead th {
+        border: 1px solid #ccc !important;
+    }
+
+    /* Corps du tableau */
+    table tbody tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    table tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }    
+    
+    .encadrant {
+        background-color: var(--sunglow) !important;
+    }
+
+    table tbody td {
+        border: 1px solid #ddd !important;
+    }
+
+    /* Logo */
+    .logo img{
+        width: 15%;
+        height: auto;
+    }
+
+    /* Titre fichier */
+    h1 {
+        color: black !important;
+    }
+
+    h2 {
+        color: black !important;
+    }
+
+    /* Titre groupe */
+    h3 {
+        margin-top: 40px;
+        margin-bottom: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        color: #444;
+        padding-bottom: 5px;
+    }
+
+    /* Bouton imprimer */
+    button {
+        background-color: var(--cobalt) !important;
+        color: white !important;
+    }
+
+    button:hover {
+        background-color: var(--uranian) !important;
+        color: black !important;
+    }
+
+    /* Bouton téléchargement */
+    .telechargement {
+        background-color: var(--jungleGreen) !important;
+        color: white !important;
+    }
+
+    .telechargement:hover {
+        background-color: #3db943 !important;
+    }
+
+    button, .telechargement, #avertissement, .retour, a {  /* Permet de ne pas afficher les boutons lors de l'impression du tableau */
+        display: none !important;
+    }
+}
+
+
+
+@media screen and (max-width: 1280px)
+{
+    .imprimer {
+        font-size: 35px;
+        margin-left: 140px;
+    }
+
+    .telechargement {
+
+        font-size: 35px;
+    }
+
+    .retour {
+
+        text-align: center;
+        padding: 20px 0px 40px 0px;
+        font-size: xx-large;
+        font-family: Arial, sans-serif;
+
+    }
+}

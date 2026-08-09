@@ -1,0 +1,112 @@
+/*
+ * Habillage exclusif à l'app mobile installée (voir App\Support\Plateforme::estAppMobile).
+ * Le site web classique (PC ou navigateur mobile) n'est jamais concerné par ce fichier :
+ * tout est scopé sous html.app-native, jamais chargé/actif ailleurs.
+ */
+
+html.app-native body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Le footer du site web n'a plus sa place : remplacé par la barre d'onglets */
+html.app-native #footer-wrapper {
+    display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Bandeau du haut : fin et discret plutôt que la grande bannière web  */
+/* ------------------------------------------------------------------ */
+
+html.app-native header {
+    height: 84px !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 18px !important;
+}
+
+html.app-native .titre-wrapper {
+    display: flex !important;
+}
+
+html.app-native .titre-divider {
+    display: none !important;
+}
+
+html.app-native header h1.titre {
+    display: flex !important;
+    font-size: 2.1rem !important;
+    padding-right: 0 !important;
+}
+
+html.app-native #profil {
+    margin-left: 0 !important;
+    gap: 0 !important;
+    padding: 0 !important;
+}
+
+html.app-native #profil-info {
+    display: none !important;
+}
+
+html.app-native #profil img {
+    width: 56px !important;
+    height: 56px !important;
+    border-width: 2px !important;
+}
+
+html.app-native #profil ion-icon[name="person-circle-outline"] {
+    font-size: 56px !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* Barre d'onglets fixe en bas, façon application native              */
+/* ------------------------------------------------------------------ */
+
+#app-bottom-nav {
+    display: none;
+}
+
+html.app-native #app-bottom-nav {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 400;
+    justify-content: space-around;
+    align-items: center;
+    height: 64px;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-color: rgba(251, 248, 243, 0.95);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-top: 1px solid rgba(30, 42, 58, 0.12);
+}
+
+html.app-native #app-bottom-nav a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    height: 100%;
+    color: #A79C8E;
+    text-decoration: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+html.app-native #app-bottom-nav a ion-icon {
+    font-size: 24px;
+}
+
+html.app-native #app-bottom-nav a.actif {
+    color: #1E2A3A;
+}
+
+html.app-native #app-bottom-nav a.actif ion-icon {
+    color: #D9531E;
+}

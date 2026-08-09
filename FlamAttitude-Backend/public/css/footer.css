@@ -1,0 +1,69 @@
+/* Import des polices */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  --bleuCY: #1E2A3A;
+  --poppy: #D9531E;
+  --grisfr: #A79C8E;
+  --font-family-titre: "Playfair Display", serif;
+  --font-family-texte: "Montserrat", sans-serif;
+  --pos-souris-x: 0px;
+  --pos-souris-y: 0px;
+}
+
+.vide {
+
+  flex: 1;   /* Permet de "combler" les vides d'une page selon sa résolution et son format pour éviter les décalages du footer */
+
+}
+
+footer > * {
+  position: relative;
+  z-index: 100;
+}
+
+footer {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0px 20px;
+    color : white;
+    bottom: 0;
+    background-color: var(--bleuCY);
+    border-radius: 10px 10px 0px 0px; 
+    border-top: 4px solid rgba(255, 255, 255, 0.25); 
+    
+
+}
+
+#footer-wrapper {
+  background-color: var(--bleuCY);
+  padding: 2px ;                   
+  border-radius: 12px 12px 0px 0px;   
+  box-shadow: 0 8px 32px rgba(58, 106, 191, 0.35);   
+  position: relative; 
+  margin-top: auto;
+
+}
+
+#footerLogo {
+
+  text-align: right;
+
+}
+
+#footerTxt {
+
+    font-family: var(--font-family-texte);
+    text-align: left;
+    width: 200px;
+
+
+}
+
+#logo {
+
+  width: 4%;
+
+}

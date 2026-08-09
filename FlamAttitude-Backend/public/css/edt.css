@@ -1,0 +1,163 @@
+/* ---------------------- Emploi du temps (réservation RDV / disponibilités) ---------------------- */
+
+.edt-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.edt-nav button {
+  background: var(--bleuCY, #1E2A3A);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-family-texte);
+  font-weight: 600;
+}
+
+.edt-nav button:hover {
+  opacity: 0.85;
+}
+
+.edt-nav span {
+  font-weight: 700;
+}
+
+.edt-legende {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  font-size: 0.85rem;
+}
+
+.edt-legende span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.edt-legende .pastille {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.edt-grille-scroll {
+  overflow-x: auto;
+}
+
+.edt-grille {
+  display: grid;
+  grid-template-columns: 70px repeat(7, minmax(90px, 1fr));
+  gap: 2px;
+  background: #e0e0e0;
+  border: 1px solid #e0e0e0;
+  min-width: 700px;
+}
+
+.edt-entete {
+  background: #f4f4f4;
+  padding: 8px 4px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.edt-cellule-heure {
+  background: #f4f4f4;
+  padding: 6px 4px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.edt-case {
+  background: white;
+  min-height: 30px;
+}
+
+.edt-case.libre {
+  background: #d4edda;
+  cursor: pointer;
+}
+
+.edt-case.libre:hover {
+  background: #b8e2c2;
+}
+
+.edt-case.indispo {
+  background: #f5f5f5;
+}
+
+.edt-case.dispo {
+  background: #d4edda;
+  cursor: pointer;
+}
+
+.edt-case.dispo:hover {
+  background: #f8d7da;
+}
+
+.edt-case.vide {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.edt-case.vide:hover {
+  background: #e2f0d9;
+}
+
+.edt-case.reserve {
+  cursor: pointer;
+  color: white;
+  font-size: 0.65rem;
+  padding: 2px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.edt-modal-fond {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.edt-modal-fond.ouvert {
+  display: flex;
+}
+
+.edt-modal {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  max-width: 400px;
+  width: 90%;
+}
+
+.edt-modal textarea {
+  width: 100%;
+  min-height: 80px;
+  margin: 10px 0;
+  padding: 8px;
+  font-family: var(--font-family-texte);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.edt-modal .edt-modal-boutons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}

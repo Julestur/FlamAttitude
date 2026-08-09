@@ -1,0 +1,621 @@
+
+
+/* ####### CSS POUR LA PAGE D'ACCUEIL D'UN ADMIN #######*/
+
+
+
+/* ---------------------- Importation et création des couleurs et polices ------------------------- */
+
+@import url(https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat);
+
+:root {
+
+  --bleuCY: #1E2A3A;
+  --grisfr: #A79C8E;
+  --font-family-titre: "Playfair Display", serif;
+  --font-family-texte: "Montserrat";
+
+}
+
+
+
+/* ################################################################################################# */
+/* ------------------------------------------- Titres ---------------------------------------------- */
+/* ################################################################################################# */
+
+.titre{
+
+    justify-content: flex-end;
+    font-size: 2.5rem;
+    color: #F1F1F1;
+    padding-right: 20px;
+    text-shadow: 3px 3px 5px #676767;
+
+}
+
+.titre1
+{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    font-family: var(--font-family-titre);
+    font-weight: bold;
+    font-size: 30px;
+
+}
+
+.titre2
+{
+    text-align: center;
+    font-family: var(--font-family-titre);
+}
+
+.titre3
+{
+    text-align: center;
+    padding-bottom: 50px;
+    font-family: var(--font-family-titre);
+    color: var(--grisfr);
+}
+
+.titre4
+{
+    text-align: center;
+    padding-bottom: 50px;
+    font-family: var(--font-family-titre);
+    color: var(--poppy);
+}
+
+
+/* ################################################################################################# */
+/* --------------------------------- STYLE TABLEAU DE BORD ADMIN ----------------------------------- */
+/* ################################################################################################# */
+
+
+.tab_bord {
+
+    margin-left: 4%;
+    margin-right: 4%;
+
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* ---- STYLE TABLEAU DE BORD ETUDIANT (2 cartes centrées) ---- */
+.tab_bord_etudiant {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 0 auto 40px auto;
+    width: 90%;
+    max-width: 800px; /* Limite la largeur pour que les cartes ne soient pas trop étirées */
+}
+
+/* On s'assure que les deux cartes ont la même taille */
+.tab_bord_etudiant .carre_style {
+    flex: 1;
+}
+
+@media (max-width: 900px){
+    .tab_bord{
+        grid-template-columns: repeat(2,1fr);
+    }
+    
+    /* Ajout pour le mode étudiant sur mobile */
+    .tab_bord_etudiant {
+        flex-direction: column;
+        align-items: center;
+    }
+    .tab_bord_etudiant .carre_style {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+
+
+.carre_style {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #eef2f7;
+}
+
+.carre_style {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contenu_carte h3 {
+    color: #626872;
+    font-family: var(--font-family-texte);
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.contenu_carte .valeur {
+    font-family: var(--font-family-texte);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: black;
+}
+
+.style_icone {
+    font-size: 2rem;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f0f7ff;
+    color: var(--bleuCY);
+}
+
+
+
+
+/* ################################################################################################# */
+/* -------------------------------- AFFICHAGE DE LA BARRE DE MENUE --------------------------------- */
+/* ################################################################################################# */
+
+
+.barre_choix{
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    
+
+}
+
+
+.bouton_choix{
+
+    display: flex;
+    justify-content: center;
+    font-family: var(--font-family-texte);
+    gap: 8px;
+    border: 1px solid transparent;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: #626872 ;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-right: 7px;
+    margin-left: 7px;
+
+
+}
+
+.bouton_choix:hover:not(.actif){ /*Devient plus foncé si on passe la souris dessus */
+
+  background-color: #d0d3da;
+
+}
+
+.bouton_choix.actif{ /*Devient plus foncé si on passe la souris dessus */
+
+  background-color: var(--bleuCY);
+  color: white;
+
+}
+
+.bouton_choix ion-icon{
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .barre_choix{
+
+        flex-direction: column; /*Mise en colone*/
+        align-items: stretch;   
+    }
+    
+}
+
+
+
+
+
+/* ################################################################################################# */
+/* -------------------------------- AFFICHAGE DES BOUTTONS DE LA PAGE DE SUPPRESSION --------------- */
+/* ################################################################################################# */
+
+
+
+
+.form_recherche {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; 
+    gap: 10px; 
+    margin-top: 30px;
+    margin-bottom: 20px; 
+    margin-left: 5%;
+}
+
+.barreRecherche{
+
+    font-family: var(--font-family-texte);
+    border: 1px solid ;
+    padding: 10px;
+    border-radius: 8px;
+    color: #626872 ;
+    background-color: #e7e5e5;
+    font-weight: 700;
+    height: 30px;
+    width: 250px;
+    box-sizing: border-box;
+
+}
+
+
+
+.bouton_barreRecherche{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-texte);
+    border: 1px solid transparent;
+    padding: 0 10px;
+    border-radius: 8px;
+    color: white ;
+    font-weight: 700;
+    background-color: var(--bleuCY);
+    height: 30px;
+    cursor: pointer;
+}
+
+.bouton_barreRecherche:hover:not(.actif){ /*Devient plus foncé si on passe la souris dessus */
+
+  background-color: #466cad;
+
+}
+
+.bouton_barreRecherche.actif{ /*Devient plus foncé si on passe la souris dessus */
+
+  background-color: #699ff5;
+  color: white;
+
+}
+
+.bouton_barreRecherche ion-icon{
+    font-size: 1rem;
+}
+
+.confirmerSuppr{
+
+    font-family: var(--font-family-texte); 
+    padding: 10px 20px; 
+    background: #e74c3c; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out;
+}
+
+.confirmerSuppr:hover {
+    transform: scale(1.05); 
+}
+
+.annulerSuppr{
+
+    font-family: var(--font-family-texte); 
+    padding: 10px 20px; 
+    background: #95a5a6; 
+    color: white; 
+    border-radius: 5px;
+    cursor: pointer; 
+    border: none; 
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out;
+}
+
+.annulerSuppr:hover {
+    transform: scale(1.05);
+}
+
+
+
+
+
+/* ################################################################################################# */
+/* ---------------------------------- AFFICHAGE DEs INFOS (tab) ------------------------------------ */
+/* ################################################################################################# */
+
+
+
+.titreInfo{
+    font-family: var(--font-family-texte);
+    display: flex;
+    align-self: flex-start;
+    justify-content: left;
+    color: #626872;
+    margin-left: 5%;
+}
+
+
+.zoneTitre{
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;        
+    margin-bottom: 10px;   
+    gap: 5px;
+
+}
+
+
+.boutonAjout{
+
+    align-self: flex-end;
+    width: fit-content;
+    margin-right: 20px;
+    margin-left: 20px;
+    background-color: #699ff5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-family: var(--font-family-texte);
+    font-weight: bold;
+    cursor: pointer;
+    
+}
+
+.tab_info{
+
+
+    width: 100%;
+    text-align: center;
+
+}
+
+.tabInfo{
+
+    margin: 0 auto;
+    width: 90%;
+    border-collapse: collapse;
+
+
+}
+
+
+th{
+    border-bottom: 1px solid #c3c7c5;
+    font-family: var(--font-family-texte);
+    color: #626872;
+
+
+}
+
+
+
+td {
+    text-align: center;
+    font-family: var(--font-family-texte);
+    padding: 15px;
+
+}
+
+@media (max-width: 768px) {
+    .zoneTitre{
+
+        display: flex;
+        flex-direction: column; /*Mise en colone*/
+        align-items: stretch;
+        gap: 15px;
+        margin-bottom: 20px;   
+    }
+
+    .titreInfo{
+        margin-left: 5%;
+    }
+
+    .boutonAjout{
+
+        align-self: center;
+        width: 90%;
+    }
+   
+    
+}
+
+
+.boutonDetails{
+
+    background-color: #699ff5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-family: var(--font-family-texte);
+    font-weight: bold;
+    cursor: pointer;
+    
+}
+
+
+
+/* ################################################################################################# */
+/* --------------------------- STYLE POUR LA BARRE LATERALE DE DETAILS ----------------------------- */
+/* ################################################################################################# */
+
+
+
+#barreLatérale{
+
+
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    height: 100%;
+    width:0;
+    position: fixed;
+    z-index: 2000; /*Permet de faire passer la barre au dessus de tout*/
+    top: 0;
+    right: 0;
+    background-color: #ffffff;
+    overflow: auto;
+
+}
+
+#contenuBarreLat{
+
+    width: 500px;
+    padding: 30px;
+    box-sizing: border-box;
+
+}
+
+
+#contenuBarreLat span{
+
+    font-weight: bold;
+    font-size: 40px;
+    float: right;
+    cursor: pointer;
+    color: #626872;
+
+}
+
+#contenuBarreLat span:hover{
+
+    color: red;
+
+}
+
+
+
+
+
+
+#date {
+
+    font-family: var(--font-family-texte);
+    font-weight: bold;
+    font-size: 12px;
+    float: left;
+    color: #626872;
+
+
+}
+#description {
+
+    font-family: var(--font-family-texte);
+    font-weight: bold;
+    font-size: 12px;
+    float: left;
+    color: #626872;
+
+
+}
+.statut {
+
+    font-family: var(--font-family-texte);
+    font-weight: bold;
+    font-size: 1rem;
+    float: left;
+    color: #626872;
+
+
+}
+
+#titre {
+
+    font-family: var(--font-family-texte);
+    font-weight: bold;
+    font-size: 23px;
+    float: left;
+    color: #626872;
+
+
+}
+
+
+
+
+
+.bouton_telecharger{
+    display:inline-block;
+    padding: 8px 12px; 
+    background-color: var(--bleuCY); 
+    color: white; 
+    border-radius: 8px; 
+    margin-right: 10px; 
+    font-family: var(--font-family-texte);
+    font-weight: bold;
+
+}
+
+
+
+
+
+
+/* ################################################################################################# */
+/* --------------------------------- Footer de la page d'acceuil ----------------------------------- */
+/* ################################################################################################# */
+
+
+.vide {
+
+  flex: 1;   /* Permet de "combler" les vides d'une page selon sa résolution et son format pour éviter les décalages du footer */
+
+}
+
+
+
+
+footer {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 0px 20px;
+  color : white;
+  bottom: 0;
+  background-color: var(--bleuCY);
+  
+
+}
+
+#logo {
+
+  width: 4%;
+
+}
+
+#footerLogo {
+
+  text-align: right;
+
+}
+
+#footerTxt {
+
+    font-family: var(--font-family-texte);
+    text-align: left;
+
+
+}
+
+
+#logo-header {
+    width: 150px;  /* Ajuste la taille selon tes besoins */
+    height: auto;
+    display: block;
+}
+
+/* Optionnel : aligner le logo dans la navbar */
+.logo {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}

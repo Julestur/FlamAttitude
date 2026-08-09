@@ -1,0 +1,15 @@
+*
+
+!.gitignore
+
+!Stockage/
+!Stockage/CV/
+!Stockage/Lettre_Motiv/
+
+!Stockage/CV/EstebanCV.pdf
+!Stockage/CV/TilioCV.pdf
+!Stockage/CV/JulesCV.pdf
+
+!Stockage/Lettre_Motiv/EstebanLettre.pdf
+!Stockage/Lettre_Motiv/TilioLettre.pdf
+!Stockage/Lettre_Motiv/JulesLettre.pdf

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYStage — README</title>
+
+
+<link rel="stylesheet" href="public/css/header.css">
+<link rel="stylesheet" href="public/css/footer.css">
+<link rel="stylesheet" href="public/css/accueilStyle.css">
+<link rel="stylesheet" href="public/css/readme.css">
+
+</head>
+<body>
+
+
+
+<div id="header-wrapper">
+  <header>
+    <div class="badge">Projet Scolaire · CY Tech</div>
+
+    <div class="titre-wrapper">
+      <div class="titre-divider"></div>
+      <h1 class="titre">CYStage</h1>  
+    </div>
+
+    <p>Plateforme de gestion des offres de stages pour les étudiants, professeurs et entreprises de CY Tech.</p>
+    
+    
+    <div class="stack">
+      <span class="pill">Laravel</span>
+      <span class="pill">PHP</span>
+      <span class="pill">MySQL</span>
+      <span class="pill">Blade</span>
+    </div>
+  
+  </header>
+</div>
+
+
+
+
+<div class="content">
+
+  <!-- FONCTIONNALITÉS -->
+  <p class="section-title">Aperçu</p>
+  <h2>Fonctionnalités</h2>
+
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">🔐</div>
+      <h3>Authentification</h3>
+      <p>Connexion, déconnexion et inscription en 3 étapes avec vérification par e-mail.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔑</div>
+      <h3>Gestion du mot de passe</h3>
+      <p>Réinitialisation par lien e-mail et changement depuis le profil.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Offres de stages</h3>
+      <p>Les entreprises et admins publient des offres consultables par tous les utilisateurs.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📨</div>
+      <h3>Candidatures</h3>
+      <p>Les étudiants postulent aux offres directement depuis la plateforme.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Tableau de bord</h3>
+      <p>Statistiques en temps réel : stages, candidatures, étudiants, professeurs, entreprises.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👤</div>
+      <h3>Gestion du profil</h3>
+      <p>Modification du mot de passe et de la photo de profil.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- INSTALLATION -->
+  <div class="install-section">
+    <p class="section-title">Démarrage</p>
+    <h2>Installation en local</h2>
+
+    <!-- PRÉREQUIS -->
+    <p style="font-size:0.88rem; color:var(--texte-doux); margin-bottom:18px;">Avant de commencer, assurez-vous d'avoir installé :</p>
+    <div class="prereq-grid">
+      <div class="prereq-card">
+        <div>
+          <strong>PHP</strong>
+          <span>php.net/downloads</span>
+        </div>
+      </div>
+
+      <div class="prereq-card">
+        <div>
+          <strong>Composer</strong>
+          <span>getcomposer.org</span>
+        </div>
+      </div>
+
+      <div class="prereq-card">
+
+        <div>
+          <strong>Git</strong>
+          <span>git-scm.com</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPES -->
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Cloner le dépôt</h3>
+          <pre><code><span class="cmd">git clone</span> https://github.com/Julestur/CYStage.git</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Installer les dépendances PHP</h3>
+          <pre><code><span class="cmd">composer install</span></code></pre>
+        </div>
+      </div>
+
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Configurer l'environnement</h3>
+          <p>Copiez le fichier d'exemple et générez la clé d'application.</p>
+          <pre><code><span class="cmd">cp</span> .env.example .env
+<span class="comment"># Initialiser le fichier .env avec vos identifiants MySQL en enlevant les "#"</span>
+<span class="key">DB_CONNECTION</span>=<span class="val">mysql</span>
+<span class="key">DB_HOST</span>=<span class="val">127.0.0.1</span>
+<span class="key">DB_PORT</span>=<span class="val">3306</span>
+<span class="key">DB_DATABASE</span>=<span class="val">laravel</span>
+<span class="key">DB_USERNAME</span>=<span class="val">"Votre identifiant MySQL"</span>
+<span class="key">DB_PASSWORD</span>=<span class="val">"Votre mot de passe MySQL"</span>
+
+<span class="cmd">php artisan</span> key:generate</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Lancer les migrations</h3>
+          <pre><code><span class="comment"># Lancer les migrations</span>
+<span class="cmd">php artisan</span> migrate</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Initialiser la base de données</h3>
+          <pre><code><span class="cmd">php artisan</span> db:seed</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Créer le lien symbolique pour les fichiers de stockage</h3>
+          <pre><code><span class="cmd">php artisan</span> storage:link</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3>Lancer le serveur de développement</h3>
+          <pre><code><span class="cmd">php artisan</span> serve</code></pre>
+          <div class="note">
+            ✅ Le site est accessible sur <strong>http://localhost:8000</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- IDENTIFIANTS -->
+  <div class="install-section">
+    <p class="section-title">Connexion</p>
+    <h2>Identifiants de test</h2>
+    <p style="font-size:0.88rem;color:var(--texte-doux);margin-bottom:16px;">
+      Utilisez les identifiants suivants pour tester l'application :
+    </p>
+    <table style="width:100%; border-collapse: collapse; margin-bottom:32px;">
+      <thead>
+        <tr style="background-color: var(--fond-secondaire, #f5f5f5); border-bottom: 2px solid var(--bordure, #ddd);">
+          <th style="padding: 12px; text-align: left; font-weight: 600; border-right: 1px solid var(--bordure, #ddd);">Profil</th>
+          <th style="padding: 12px; text-align: left; font-weight: 600; border-right: 1px solid var(--bordure, #ddd);">Identifiant</th>
+          <th style="padding: 12px; text-align: left; font-weight: 600;">Mot de passe</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid var(--bordure, #ddd);">
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Admin</td>
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Admin</td>
+          <td style="padding: 12px;">Admin</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bordure, #ddd);">
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Étudiant 1</td>
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Esteban</td>
+          <td style="padding: 12px;">Esteban</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bordure, #ddd);">
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Étudiant 2</td>
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Tilio</td>
+          <td style="padding: 12px;">Tilio</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bordure, #ddd);">
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Étudiant 3</td>
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Jules</td>
+          <td style="padding: 12px;">Jules</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bordure, #ddd);">
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Étudiant 4</td>
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Etudiant</td>
+          <td style="padding: 12px;">Etudiant</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bordure, #ddd);">
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Professeur</td>
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Prof</td>
+          <td style="padding: 12px;">Prof</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Entreprise</td>
+          <td style="padding: 12px; border-right: 1px solid var(--bordure, #ddd);">Entreprise</td>
+          <td style="padding: 12px;">Entreprise</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CONFIGURATION MAIL -->
+  <div class="install-section">
+    <p class="section-title">Configuration</p>
+    <h2>Envoi d'e-mails</h2>
+    <p style="font-size:0.88rem;color:var(--texte-doux);margin-bottom:16px;">
+      L'inscription et la réinitialisation de mot de passe nécessitent un service SMTP. Modifiez ces variables dans votre fichier <span class="inline-code">.env</span> :
+    </p>
+    <pre><code><span class="key">MAIL_MAILER</span>=<span class="val">smtp</span>
+<span class="key">MAIL_HOST</span>=<span class="val">smtp.gmail.com</span>
+<span class="key">MAIL_PORT</span>=<span class="val">587</span>
+<span class="key">MAIL_USERNAME</span>=<span class="val">"ne.pas.repondreCYStage@gmail.com"</span>
+<span class="key">MAIL_PASSWORD</span>=<span class="val">"javmrpqjlmmgghea"</span>
+<span class="key">MAIL_FROM_ADDRESS</span>=<span class="val">"ne_pas_repondre@CYStage.com"</span>
+<span class="key">MAIL_FROM_NAME</span>=<span class="val">"CYStage"</span></code></pre>
+   
+  </div>
+
+  <hr class="divider">
+
+  <!-- STRUCTURE -->
+  <div class="structure-section">
+    <p class="section-title">Architecture</p>
+    <h2>Structure du projet</h2>
+    <div class="file-tree">
+      <code>
+        <span class="tree-dir">cystage/</span><br>
+        ├── <span class="tree-dir">app/</span><br>
+        │   ├── <span class="tree-dir">Http/Controllers/</span>    <span class="tree-desc"># Auth, inscription, accueil, profil…</span><br>
+        │   ├── <span class="tree-dir">Models/</span>              <span class="tree-desc"># Modèles Eloquent (User…)</span><br>
+        │   └── <span class="tree-dir">Mail/</span>                <span class="tree-desc"># Envoi d'e-mails (vérification, réinit. MDP)</span><br>
+        ├── <span class="tree-dir">database/</span><br>
+        │   ├── <span class="tree-dir">migrations/</span>          <span class="tree-desc"># Structure BDD (utilisateur, stage, candidature…)</span><br>
+        │   └── <span class="tree-dir">seeders/</span>             <span class="tree-desc"># Données de test (lieu où sont géré les identifiants et mot de passe)</span><br>
+        ├── <span class="tree-dir">public/</span><br>
+        │   ├── <span class="tree-dir">css/</span>                 <span class="tree-desc"># Feuilles de style</span><br>
+        │   ├── <span class="tree-dir">js/</span>                  <span class="tree-desc"># Scripts </span><br>
+        │   └── <span class="tree-dir">Images/</span>              <span class="tree-desc"># Images</span><br>
+        ├── <span class="tree-dir">resources/views/</span><br>     <span class="tree-desc"># Vues Blade (pages de chaque profil, message, layouts, partials)</span><br>
+        │   ├── <span class="tree-dir">acceuil/</span>             <span class="tree-desc"># de chaque profil</span><br>
+        │   ├── <span class="tree-dir">connexion/</span>           <span class="tree-desc"></span><br>
+        │   ├── <span class="tree-dir">gestionMDP/</span>          <span class="tree-desc"></span><br>
+        │   ├── <span class="tree-dir">Mail/</span>                <span class="tree-desc"></span><br>
+        │   ├── <span class="tree-dir">messages/</span>            <span class="tree-desc"></span><br>
+        │   └── <span class="tree-dir">partials/</span>            <span class="tree-desc"></span><br>
+        ├── <span class="tree-dir">storage/</span><br>             <span class="tree-desc"># zone de stockage</span><br>
+        │   ├── <span class="tree-dir">app/</span>                 <span class="tree-desc"># de l'application</span><br>
+        │   ├── <span class="tree-dir">framework/ </span>          <span class="tree-desc"># de Laravel </span><br>
+        └── <span class="tree-dir">routes/</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="tree-file">web.php</span>              <span class="tree-desc"># Toutes les routes de l'application</span>
+      </code>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Footer  -->
+    <div id="footer-wrapper"> 
+        <footer>
+            <p id="footerTxt">&copy; 2026, Equipe 4 - EHRMANN_PRETO_TURCHI - CYStage</p>
+            <p id="footerLogo"><img id="logo" src="public/Images/LogoCyBlanc.png"></p>
+        </footer>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+/* Rend le rendu "figé" comme une vraie app plutôt que comme un site web dans une fenêtre :
+   pas de rebond élastique en fin de page, pas de défilement horizontal accidentel. */
+
+html, body {
+  overscroll-behavior: none;
+  overflow-x: hidden;
+  touch-action: pan-y;
+}
