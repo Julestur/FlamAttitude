@@ -22,9 +22,11 @@ class AuthService {
     });
   }
 
-  /// Étape 2 : vérifie le code reçu par email, stocke le jeton Sanctum (et le
-  /// jeton d'appareil biométrique s'il est fourni, pour le staff/admin).
-  Future<Map<String, dynamic>> verifierCode(String email, String code) async {
+  /// Étape 2 : vérifie le code reçu par email, stocke le jeton Sanctum. Si le
+  /// serveur fournit un jeton d'appareil (staff/admin), il n'est PAS stocké tout
+  /// de suite : l'appelant doit d'abord demander le consentement de l'utilisateur
+  /// (voir [activerBiometrie]) avant d'activer la reconnexion biométrique.
+  Future<({Map<String, dynamic> utilisateur, String? jetonAppareilPropose})> verifierCode(String email, String code) async {
     final reponse = await _api.post('/auth/verifier-code', {
       'email': email,
       'code': code,
@@ -32,12 +34,26 @@ class AuthService {
 
     await _stockage.write(key: _cleJeton, value: reponse['jeton'] as String);
 
-    final jetonAppareil = reponse['jeton_appareil'] as String?;
-    if (jetonAppareil != null) {
-      await _stockage.write(key: _cleJetonAppareil, value: jetonAppareil);
-    }
+    return (
+      utilisateur: reponse['utilisateur'] as Map<String, dynamic>,
+      jetonAppareilPropose: reponse['jeton_appareil'] as String?,
+    );
+  }
 
-    return reponse['utilisateur'] as Map<String, dynamic>;
+  /// Active la reconnexion biométrique : à appeler uniquement après consentement
+  /// explicite de l'utilisateur, avec le jeton proposé par [verifierCode].
+  Future<void> activerBiometrie(String jetonAppareil) async {
+    await _stockage.write(key: _cleJetonAppareil, value: jetonAppareil);
+  }
+
+  /// Envoie un email avec un lien de réinitialisation (à ouvrir dans le navigateur).
+  Future<void> demanderReinitialisationMotDePasse(String email) async {
+    await _api.post('/auth/mot-de-passe-oublie', {'email': email});
+  }
+
+  /// Redemande un code, uniquement possible si une connexion est déjà en cours.
+  Future<void> renvoyerCode(String email) async {
+    await _api.post('/auth/renvoyer-code', {'email': email});
   }
 
   /// True si un jeton d'appareil (biométrie) est stocké sur ce téléphone.
@@ -65,6 +81,9 @@ class AuthService {
 
     return reponse['utilisateur'] as Map<String, dynamic>;
   }
+
+  /// Jeton Sanctum actuellement stocké, à passer aux autres services (ex: AccueilService).
+  Future<String?> jetonActuel() => _stockage.read(key: _cleJeton);
 
   /// Profil de l'utilisateur actuellement connecté (jeton Sanctum stocké).
   Future<Map<String, dynamic>> moi() async {

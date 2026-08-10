@@ -21,5 +21,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'check.connexion' => \App\Http\Middleware\CheckConnexion::class,
             'role' => \App\Http\Middleware\VerifieRole::class,
+            'role.api' => \App\Http\Middleware\VerifieRoleApi::class,
         ]);
     })->create();

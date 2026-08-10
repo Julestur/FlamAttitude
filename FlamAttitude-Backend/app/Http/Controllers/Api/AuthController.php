@@ -98,6 +98,26 @@ class AuthController extends Controller
         return response()->json($this->reponseConnecte($user, $request->userAgent()));
     }
 
+    // Renvoie un nouveau code, uniquement si une demande de connexion est déjà en cours
+    // pour cet email (un code actif existe) : pas besoin de repasser le mot de passe,
+    // mais impossible de déclencher un envoi sur un compte sans connexion en cours.
+    public function renvoyerCode(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $user = $this->trouverParEmail($request->input('email'));
+
+        if (! $user || ! $user->two_factor_expires_at) {
+            return response()->json(['message' => 'Aucune demande de connexion en cours pour cet email.'], 422);
+        }
+
+        if (! $this->genererEtEnvoyerCode($user)) {
+            return response()->json(['message' => 'Merci de patienter quelques secondes avant de redemander un code.'], 429);
+        }
+
+        return response()->json(['message' => 'Un nouveau code vous a été envoyé.']);
+    }
+
     // Reconnexion silencieuse (biométrie) via un jeton d'appareil de confiance déjà émis
     public function connecterAppareil(Request $request)
     {

@@ -47,6 +47,7 @@ class Planning
 
         $dispos = $type && $idsMembres ? self::chargerDisponibilites($idsMembres, $lundi, $dimanche) : [];
         $rdvs = $type && $idsMembres ? self::chargerRdv($idsMembres, $lundi, $dimanche) : [];
+        $charges = $type && $idsMembres ? self::chargerCharge($idsMembres) : [];
 
         $jours = [];
         for ($i = 0; $i < 7; $i++) {
@@ -56,7 +57,7 @@ class Planning
 
             foreach (self::heuresGrille() as $heure) {
                 $creneaux[$heure] = $type && $idsMembres
-                    ? self::membreLibre($idsMembres, $dateStr, $heure, (int) $type->duree_minutes, $dispos, $rdvs) !== null
+                    ? self::membreLibre($idsMembres, $dateStr, $heure, (int) $type->duree_minutes, $dispos, $rdvs, $charges) !== null
                     : false;
             }
 
@@ -87,8 +88,9 @@ class Planning
         $jour = CarbonImmutable::parse($date);
         $dispos = self::chargerDisponibilites($idsMembres, $jour, $jour);
         $rdvs = self::chargerRdv($idsMembres, $jour, $jour);
+        $charges = self::chargerCharge($idsMembres);
 
-        return self::membreLibre($idsMembres, $date, $heureDebut, (int) $type->duree_minutes, $dispos, $rdvs);
+        return self::membreLibre($idsMembres, $date, $heureDebut, (int) $type->duree_minutes, $dispos, $rdvs, $charges);
     }
 
     /**
@@ -169,7 +171,7 @@ class Planning
             ->where('r.idRdv', $idRdv)
             ->select(
                 'r.*',
-                'membre.nom as membreNom', 'membre.prenom as membrePrenom',
+                'membre.nom as membreNom', 'membre.prenom as membrePrenom', 'membre.email as membreEmail',
                 'client.nom as clientNom', 'client.prenom as clientPrenom', 'client.email as clientEmail',
                 't.nom as typeNom', 't.couleur as typeCouleur', 't.duree_minutes as typeDureeMinutes'
             )
@@ -192,7 +194,55 @@ class Planning
             ->exists();
     }
 
-    private static function membreLibre(array $idsMembres, string $date, string $heureDebut, int $dureeMinutes, array $dispos, array $rdvs): ?int
+    /**
+     * Un membre donné propose-t-il ce type de RDV ?
+     */
+    public static function estQualifiePour(int $idMembre, int $idTypeRdv): bool
+    {
+        return DB::table('membre_type_rdv')->where('idMembre', $idMembre)->where('idTypeRdv', $idTypeRdv)->exists();
+    }
+
+    /**
+     * Un membre donné est-il libre (disponibilités + pas de chevauchement avec un
+     * autre RDV) pour ce créneau ? Utilisé par l'admin pour déplacer/réassigner un
+     * RDV existant ; [$idRdvExclu] ignore le RDV qu'on est justement en train de
+     * déplacer, sinon il se bloquerait lui-même.
+     */
+    public static function membreLibrePourDeplacement(int $idMembre, string $date, string $heureDebut, int $dureeMinutes, ?int $idRdvExclu = null): bool
+    {
+        $heureFin = self::calculerHeureFin($heureDebut, $dureeMinutes);
+
+        if ($heureFin > self::HEURE_FERMETURE) {
+            return false;
+        }
+
+        foreach (self::marquesRequises($heureDebut, $dureeMinutes) as $marque) {
+            $dispo = DB::table('disponibilite')
+                ->where('idMembre', $idMembre)->where('date', $date)->where('heure_debut', $marque.':00')
+                ->exists();
+
+            if (! $dispo) {
+                return false;
+            }
+        }
+
+        $chevauche = DB::table('rdv')
+            ->where('idMembre', $idMembre)
+            ->where('date', $date)
+            ->where('heure_debut', '<', $heureFin.':00')
+            ->where('heure_fin', '>', $heureDebut.':00')
+            ->when($idRdvExclu, fn ($q) => $q->where('idRdv', '!=', $idRdvExclu))
+            ->exists();
+
+        return ! $chevauche;
+    }
+
+    /**
+     * Parmi les membres qualifiés, renvoie celui qui est libre à ce créneau ET qui a
+     * le moins de RDV à venir (répartition équilibrée de la charge de travail),
+     * plutôt que systématiquement le premier de la liste.
+     */
+    private static function membreLibre(array $idsMembres, string $date, string $heureDebut, int $dureeMinutes, array $dispos, array $rdvs, array $charges = []): ?int
     {
         $heureFin = self::calculerHeureFin($heureDebut, $dureeMinutes);
 
@@ -201,6 +251,7 @@ class Planning
         }
 
         $marques = self::marquesRequises($heureDebut, $dureeMinutes);
+        $candidats = [];
 
         foreach ($idsMembres as $idMembre) {
             $toutesLibres = true;
@@ -226,11 +277,32 @@ class Planning
             }
 
             if (! $chevauche) {
-                return $idMembre;
+                $candidats[] = $idMembre;
             }
         }
 
-        return null;
+        if (! $candidats) {
+            return null;
+        }
+
+        usort($candidats, fn ($a, $b) => ($charges[$a] ?? 0) <=> ($charges[$b] ?? 0) ?: $a <=> $b);
+
+        return $candidats[0];
+    }
+
+    /**
+     * Nombre de RDV à venir (à partir d'aujourd'hui) par membre, pour équilibrer
+     * l'assignation automatique entre les employés qualifiés pour un type de RDV.
+     */
+    private static function chargerCharge(array $idsMembres): array
+    {
+        return DB::table('rdv')
+            ->whereIn('idMembre', $idsMembres)
+            ->where('date', '>=', now()->toDateString())
+            ->selectRaw('idMembre, count(*) as total')
+            ->groupBy('idMembre')
+            ->pluck('total', 'idMembre')
+            ->all();
     }
 
     private static function marquesRequises(string $heureDebut, int $dureeMinutes): array
