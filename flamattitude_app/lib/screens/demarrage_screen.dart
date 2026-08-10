@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
+import '../services/notification_service.dart';
 import '../theme.dart';
 import 'login_screen.dart';
 import 'principal_screen.dart';
@@ -33,6 +36,10 @@ class _DemarrageScreenState extends State<DemarrageScreen> {
       }
     } catch (_) {
       utilisateur = null;
+    }
+
+    if (utilisateur != null) {
+      unawaited(NotificationService().enregistrerJetonAupresDuServeur());
     }
 
     if (!mounted) return;

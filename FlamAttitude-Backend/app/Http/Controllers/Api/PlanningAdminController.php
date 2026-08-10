@@ -6,6 +6,7 @@ use App\Http\Controllers\Concerns\GereSemaineEdt;
 use App\Http\Controllers\Controller;
 use App\Mail\RdvAnnuleMail;
 use App\Mail\RdvDeplaceMail;
+use App\Support\Notificateur;
 use App\Support\Planning;
 use App\Support\Roles;
 use Illuminate\Database\QueryException;
@@ -114,6 +115,10 @@ class PlanningAdminController extends Controller
             report($e);
         }
 
+        $horaire = "{$details->typeNom} le {$details->date} à ".substr($details->heure_debut, 0, 5);
+        Notificateur::envoyer($details->clientFcmToken, 'Rendez-vous modifié', $horaire);
+        Notificateur::envoyer($details->membreFcmToken, 'Rendez-vous modifié', "$horaire avec {$details->clientPrenom} {$details->clientNom}");
+
         return response()->json(['message' => 'Rendez-vous déplacé.']);
     }
 
@@ -133,6 +138,10 @@ class PlanningAdminController extends Controller
         } catch (\Exception $e) {
             report($e);
         }
+
+        $horaire = "{$details->typeNom} le {$details->date} à ".substr($details->heure_debut, 0, 5);
+        Notificateur::envoyer($details->clientFcmToken, 'Rendez-vous annulé', $horaire);
+        Notificateur::envoyer($details->membreFcmToken, 'Rendez-vous annulé', "$horaire avec {$details->clientPrenom} {$details->clientNom}");
 
         return response()->json(['message' => 'Rendez-vous annulé.']);
     }

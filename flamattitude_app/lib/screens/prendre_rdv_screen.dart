@@ -63,7 +63,7 @@ class _PrendreRdvScreenState extends State<PrendreRdvScreen> {
     try {
       final grille = await _reservationService.grille(
         idTypeRdv: _idTypeSelectionne!,
-        semaine: _donnees!['lundi'] as String,
+        semaine: _semaineDemandee ?? _donnees!['lundi'] as String,
       );
       if (mounted) {
         setState(() {
@@ -90,6 +90,22 @@ class _PrendreRdvScreenState extends State<PrendreRdvScreen> {
       _jourSelectionne = 0;
     });
     _rechargerGrille();
+  }
+
+  /// Cache les créneaux déjà passés (uniquement pertinent pour aujourd'hui,
+  /// les autres jours de la semaine sont forcément dans le futur).
+  Iterable<MapEntry<String, dynamic>> _creneauxAffiches(String date, Map<String, dynamic> creneaux) {
+    final maintenant = DateTime.now();
+    final jourDate = DateTime.parse(date);
+    final estAujourdhui = jourDate.year == maintenant.year && jourDate.month == maintenant.month && jourDate.day == maintenant.day;
+
+    if (!estAujourdhui) return creneaux.entries;
+
+    return creneaux.entries.where((entree) {
+      final parties = entree.key.split(':');
+      final heureCreneau = DateTime(maintenant.year, maintenant.month, maintenant.day, int.parse(parties[0]), int.parse(parties[1]));
+      return heureCreneau.isAfter(maintenant);
+    });
   }
 
   Future<void> _reserver(String date, String heure) async {
@@ -140,7 +156,7 @@ class _PrendreRdvScreenState extends State<PrendreRdvScreen> {
       context: context,
       builder: (contexteDialogue) => AlertDialog(
         title: const Text('Annuler ce rendez-vous ?'),
-        content: Text('${rdv['typeNom']} le ${rdv['date']} avec ${rdv['membrePrenom']} ${rdv['membreNom']}.'),
+        content: Text('${rdv['typeNom']} le ${_formaterDate(rdv['date'] as String)} avec ${rdv['membrePrenom']} ${rdv['membreNom']}.'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(contexteDialogue, false), child: const Text('Retour')),
           ElevatedButton(
@@ -260,22 +276,27 @@ class _PrendreRdvScreenState extends State<PrendreRdvScreen> {
         Expanded(
           child: ListView(
             padding: const EdgeInsets.all(16),
-            children: creneaux.entries.map((entree) {
+            children: _creneauxAffiches(jour['date'] as String, creneaux).map((entree) {
               final heure = entree.key;
               final libre = entree.value == true;
 
               return Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                  color: libre ? Colors.greenAccent.withValues(alpha: 0.15) : CouleursFlamattitude.champ,
+                  color: libre ? Colors.greenAccent.withValues(alpha: 0.15) : CouleursFlamattitude.champ.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-                  leading: Text(heure, style: const TextStyle(color: CouleursFlamattitude.texte, fontWeight: FontWeight.bold)),
-                  title: Text(
-                    libre ? 'Disponible' : 'Indisponible',
-                    style: const TextStyle(color: CouleursFlamattitude.texte),
+                  leading: Text(
+                    heure,
+                    style: TextStyle(
+                      color: libre ? CouleursFlamattitude.texte : CouleursFlamattitude.texte.withValues(alpha: 0.35),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  title: libre
+                      ? const Text('Disponible', style: TextStyle(color: CouleursFlamattitude.texte))
+                      : null,
                   onTap: libre ? () => _reserver(jour['date'] as String, heure) : null,
                 ),
               );
@@ -299,6 +320,7 @@ class _PrendreRdvScreenState extends State<PrendreRdvScreen> {
       itemBuilder: (context, index) {
         final rdv = mesRdv[index] as Map<String, dynamic>;
         final couleur = Color(int.parse((rdv['typeCouleur'] as String).substring(1), radix: 16) + 0xFF000000);
+        final estPasse = DateTime.parse('${rdv['date']} ${rdv['heure_debut']}').isBefore(DateTime.now());
 
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
@@ -313,7 +335,7 @@ class _PrendreRdvScreenState extends State<PrendreRdvScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      '${rdv['typeNom']} — ${rdv['date']} ${(rdv['heure_debut'] as String).substring(0, 5)}',
+                      '${rdv['typeNom']} — ${_formaterDate(rdv['date'] as String)} ${(rdv['heure_debut'] as String).substring(0, 5)}',
                       style: const TextStyle(color: CouleursFlamattitude.texte, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -323,14 +345,25 @@ class _PrendreRdvScreenState extends State<PrendreRdvScreen> {
               Text('Avec ${rdv['membrePrenom']} ${rdv['membreNom']}', style: TextStyle(color: CouleursFlamattitude.texte.withValues(alpha: 0.7))),
               if (rdv['motif'] != null)
                 Text('Motif : ${rdv['motif']}', style: TextStyle(color: CouleursFlamattitude.texte.withValues(alpha: 0.7))),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(onPressed: () => _annulerRdv(rdv), child: const Text('Annuler')),
-              ),
+              if (!estPasse)
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(onPressed: () => _annulerRdv(rdv), child: const Text('Annuler')),
+                ),
             ],
           ),
         );
       },
     );
   }
+}
+
+const _moisFr = [
+  'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+  'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
+];
+
+String _formaterDate(String isoDate) {
+  final date = DateTime.parse(isoDate);
+  return '${date.day} ${_moisFr[date.month - 1]} ${date.year}';
 }

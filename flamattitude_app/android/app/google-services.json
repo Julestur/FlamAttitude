@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "620017777110",
+    "project_id": "flam-attitude",
+    "storage_bucket": "flam-attitude.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620017777110:android:dbbb1bd84872bea7e2cc77",
+        "android_client_info": {
+          "package_name": "com.flamattitude.flamattitude_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBwezqCgWxQoh5t6RNcYOLR74KCMeyL2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

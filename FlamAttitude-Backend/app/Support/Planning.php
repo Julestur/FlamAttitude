@@ -171,8 +171,8 @@ class Planning
             ->where('r.idRdv', $idRdv)
             ->select(
                 'r.*',
-                'membre.nom as membreNom', 'membre.prenom as membrePrenom', 'membre.email as membreEmail',
-                'client.nom as clientNom', 'client.prenom as clientPrenom', 'client.email as clientEmail',
+                'membre.nom as membreNom', 'membre.prenom as membrePrenom', 'membre.email as membreEmail', 'membre.fcm_token as membreFcmToken',
+                'client.nom as clientNom', 'client.prenom as clientPrenom', 'client.email as clientEmail', 'client.fcm_token as clientFcmToken',
                 't.nom as typeNom', 't.couleur as typeCouleur', 't.duree_minutes as typeDureeMinutes'
             )
             ->first();

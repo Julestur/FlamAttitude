@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Concerns\GereSemaineEdt;
 use App\Http\Controllers\Controller;
 use App\Mail\RdvConfirmationMail;
+use App\Support\Notificateur;
 use App\Support\Planning;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -116,11 +118,16 @@ class EspaceClientController extends Controller
             throw $e;
         }
 
+        $details = Planning::detailsRdv($idRdv);
+
         try {
-            Mail::to($request->user()->email)->send(new RdvConfirmationMail(Planning::detailsRdv($idRdv)));
+            Mail::to($request->user()->email)->send(new RdvConfirmationMail($details));
         } catch (\Exception $e) {
             report($e);
         }
+
+        Notificateur::envoyer($details->clientFcmToken, 'Rendez-vous confirmé', "{$details->typeNom} le {$details->date} à ".substr($details->heure_debut, 0, 5));
+        Notificateur::envoyer($details->membreFcmToken, 'Nouveau rendez-vous', "{$details->typeNom} le {$details->date} à ".substr($details->heure_debut, 0, 5)." avec {$details->clientPrenom} {$details->clientNom}");
 
         return response()->json(['message' => 'Rendez-vous réservé avec succès. Un email de confirmation vous a été envoyé.']);
     }
@@ -131,6 +138,10 @@ class EspaceClientController extends Controller
 
         if (! $rdv) {
             abort(403);
+        }
+
+        if (now()->greaterThan(Carbon::parse("{$rdv->date} {$rdv->heure_debut}"))) {
+            return response()->json(['message' => 'Impossible d\'annuler un rendez-vous déjà passé.'], 422);
         }
 
         DB::table('rdv')->where('idRdv', $id)->delete();

@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import '../services/api_client.dart';
 import '../services/auth_service.dart';
+import '../services/notification_service.dart';
 import '../theme.dart';
 import 'principal_screen.dart';
 
@@ -52,6 +54,8 @@ class _CodeScreenState extends State<CodeScreen> {
           await _authService.activerBiometrie(resultat.jetonAppareilPropose!);
         }
       }
+
+      unawaited(NotificationService().enregistrerJetonAupresDuServeur());
 
       if (!mounted) return;
       Navigator.pushAndRemoveUntil(

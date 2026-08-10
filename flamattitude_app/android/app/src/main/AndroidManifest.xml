@@ -2,6 +2,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="Flam'Attitude"
         android:name="${applicationName}"
@@ -36,6 +37,15 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- Icône/canal par défaut utilisés par Android quand une notification arrive
+             pendant que l'app est fermée/en arrière-plan (géré nativement, pas par notre code). -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="flamattitude_notifications" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

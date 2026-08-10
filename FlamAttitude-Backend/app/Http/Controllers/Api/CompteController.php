@@ -78,4 +78,16 @@ class CompteController extends Controller
             'photo_profil' => $nomFichier,
         ]);
     }
+
+    // Enregistre le jeton FCM de l'appareil courant, pour recevoir des notifications push.
+    public function enregistrerJetonFcm(Request $request)
+    {
+        $request->validate(['jeton_fcm' => 'required|string']);
+
+        DB::table('utilisateur')->where('idUtilisateur', $request->user()->idUtilisateur)->update([
+            'fcm_token' => $request->input('jeton_fcm'),
+        ]);
+
+        return response()->json(['message' => 'Jeton enregistré.']);
+    }
 }

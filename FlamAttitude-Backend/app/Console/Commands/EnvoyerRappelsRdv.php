@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\RdvRappelMail;
+use App\Support\Notificateur;
 use App\Support\Planning;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
@@ -36,6 +37,11 @@ class EnvoyerRappelsRdv extends Command
 
             try {
                 Mail::to($details->clientEmail)->send(new RdvRappelMail($details, $delaiLabel));
+                Notificateur::envoyer(
+                    $details->clientFcmToken,
+                    'Rappel de rendez-vous',
+                    "{$details->typeNom} {$delaiLabel} à ".substr($details->heure_debut, 0, 5)
+                );
                 DB::table('rdv')->where('idRdv', $idRdv)->update([$colonne => true]);
                 $this->info("Rappel envoyé pour le RDV #{$idRdv} ({$delaiLabel}).");
             } catch (\Exception $e) {

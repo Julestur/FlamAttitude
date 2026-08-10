@@ -157,11 +157,17 @@ class AuthController extends Controller
     // Révoque le jeton Sanctum courant, et le jeton d'appareil associé s'il est fourni
     public function logout(Request $request)
     {
+        $idUtilisateur = $request->user()->idUtilisateur;
+
         $request->user()->currentAccessToken()->delete();
 
         if ($selecteur = $request->input('selecteur_appareil')) {
             DB::table('appareil_confie')->where('selecteur', $selecteur)->delete();
         }
+
+        // Sans ça, le compte continuerait à recevoir des notifications push
+        // même déconnecté (le jeton FCM est lié à l'appareil, pas à la session).
+        DB::table('utilisateur')->where('idUtilisateur', $idUtilisateur)->update(['fcm_token' => null]);
 
         return response()->json(['message' => 'Déconnecté.']);
     }

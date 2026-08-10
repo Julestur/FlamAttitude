@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/accueil', [AccueilController::class, 'index']);
     Route::post('/compte/changer-mot-de-passe', [CompteController::class, 'changerMotDePasse']);
     Route::post('/compte/changer-photo-profil', [CompteController::class, 'changerPhotoProfil']);
+    Route::post('/compte/jeton-fcm', [CompteController::class, 'enregistrerJetonFcm']);
 
     Route::middleware('role.api:staff')->group(function () {
         Route::get('/clients', [ClientController::class, 'rechercher']);
