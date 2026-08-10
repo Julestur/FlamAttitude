@@ -120,17 +120,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
         ),
         const SizedBox(height: 24),
         ..._cartesPourRole(idStatut, stats),
-        const SizedBox(height: 24),
-        const Text(
-          'Actions rapides',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: CouleursFlamattitude.texte,
-          ),
-        ),
-        const SizedBox(height: 12),
-        ..._actionsPourRole(idStatut),
+        ..._sectionActionsRapides(idStatut),
       ],
     );
   }
@@ -159,26 +149,36 @@ class _AccueilScreenState extends State<AccueilScreen> {
     return cartes.map((c) => _construireCarte(c)).toList();
   }
 
+  List<Widget> _sectionActionsRapides(int idStatut) {
+    final actions = _actionsPourRole(idStatut);
+    if (actions.isEmpty) return [];
+
+    return [
+      const SizedBox(height: 24),
+      const Text(
+        'Actions rapides',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: CouleursFlamattitude.texte,
+        ),
+      ),
+      const SizedBox(height: 12),
+      ...actions,
+    ];
+  }
+
   List<Widget> _actionsPourRole(int idStatut) {
     final actions = switch (idStatut) {
+      // "Rechercher un client", "Mon EDT" et "Mes disponibilités" sont désormais
+      // dans la barre d'onglets du bas : pas besoin de les dupliquer ici.
       _Roles.admin => const [
-          'Rechercher un client',
           'Planning global',
-          'Mon EDT',
-          'Mes disponibilités',
           'Types de RDV',
           'Ajouter un utilisateur',
           'Supprimer un utilisateur',
         ],
-      _Roles.membreEntreprise => const [
-          'Rechercher un client',
-          'Mon EDT',
-          'Mes disponibilités',
-        ],
-      _Roles.client => const [
-          'Mes documents et factures',
-          'Prendre ou gérer un RDV',
-        ],
+      _Roles.client => const [],
       _ => const <String>[],
     };
 

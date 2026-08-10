@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../services/api_client.dart';
 import '../services/auth_service.dart';
 import '../theme.dart';
-import 'accueil_screen.dart';
+import 'principal_screen.dart';
 
 class CodeScreen extends StatefulWidget {
   final String email;
@@ -56,7 +56,7 @@ class _CodeScreenState extends State<CodeScreen> {
       if (!mounted) return;
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (_) => AccueilScreen(utilisateur: resultat.utilisateur)),
+        MaterialPageRoute(builder: (_) => PrincipalScreen(utilisateur: resultat.utilisateur)),
         (route) => false,
       );
     } on ApiException catch (e) {

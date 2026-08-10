@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
 import '../theme.dart';
-import 'accueil_screen.dart';
 import 'login_screen.dart';
+import 'principal_screen.dart';
 
 /// Écran affiché au lancement de l'app : tente une reconnexion silencieuse par
 /// biométrie si un jeton d'appareil de confiance est stocké (staff/admin ayant
@@ -40,7 +40,7 @@ class _DemarrageScreenState extends State<DemarrageScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => utilisateur != null ? AccueilScreen(utilisateur: utilisateur) : const LoginScreen(),
+        builder: (_) => utilisateur != null ? PrincipalScreen(utilisateur: utilisateur) : const LoginScreen(),
       ),
     );
   }
