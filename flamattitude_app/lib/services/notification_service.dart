@@ -30,7 +30,10 @@ class NotificationService {
         ?.createNotificationChannel(_canal);
 
     await _notificationsLocales.initialize(
-      settings: const InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher')),
+      settings: const InitializationSettings(
+        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        iOS: DarwinInitializationSettings(),
+      ),
     );
 
     FirebaseMessaging.onMessage.listen(_afficherNotificationSysteme);
@@ -58,6 +61,7 @@ class NotificationService {
           priority: Priority.high,
           icon: '@mipmap/ic_launcher',
         ),
+        iOS: const DarwinNotificationDetails(),
       ),
     );
   }
