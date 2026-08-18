@@ -72,7 +72,15 @@ class NotificationService {
     final jetonSanctum = await _authService.jetonActuel();
     if (jetonSanctum == null) return;
 
-    final jetonFcm = await _messagerie.getToken();
+    // Sur le simulateur iOS, Apple ne fournit jamais de jeton APNs (pas de
+    // vraies notifications push possibles) : getToken() lève alors une
+    // exception qu'il ne faut pas laisser remonter jusqu'au démarrage de l'app.
+    final String? jetonFcm;
+    try {
+      jetonFcm = await _messagerie.getToken();
+    } catch (_) {
+      return;
+    }
     if (jetonFcm == null) return;
 
     try {
